@@ -113,6 +113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RGB_MOD:
       if (record->event.pressed) {
         isTapAnim = false;
+        previousHiraganaRow = -1;
       }
       break;
     case RGB_RST:
@@ -120,6 +121,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
           eeconfig_update_rgblight_default();
           rgblight_enable();
+          previousHiraganaRow = -1;
         }
       #endif
       break;
@@ -161,6 +163,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KATATE_TEN:
       if (record->event.pressed) { katate_emulator(10); }
       break;
+    default:
+      previousHiraganaRow = -1;
   }
 
   if (isTapAnim) {
