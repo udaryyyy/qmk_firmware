@@ -26,7 +26,8 @@ enum custom_keycodes {
   KATATE_M,
   KATATE_Y,
   KATATE_R,
-  KATATE_W
+  KATATE_W,
+  KATATE_TEN
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -46,10 +47,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [KATATE] = LAYOUT( \
-    KC_ESC,   KC_1,      KATATE_A,  KATATE_K, KATATE_S, KC_5,     KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
-    KC_TAB,   KC_A,      KATATE_T,  KATATE_N, KATATE_H, KC_G,     KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
-    KC_LSFT,  KC_Z,      KATATE_M,  KATATE_Y, KATATE_R, KC_B,     TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
-    _______,  _______,   _______,   KATATE_W, _______,  _______,  _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
+    KC_ESC,   KC_1,      KATATE_A,  KATATE_K, KATATE_S,   KC_5,     KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
+    KC_TAB,   KC_A,      KATATE_T,  KATATE_N, KATATE_H,   KC_G,     KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
+    KC_LSFT,  KC_Z,      KATATE_M,  KATATE_Y, KATATE_R,   KC_B,     TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
+    _______,  _______,   _______,   KATATE_W, KATATE_TEN, _______,  _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
   ),
 
   [SYMB] = LAYOUT( \
@@ -70,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool isTapAnim = false;
 
-const char HIRAGANA[10][5][3] = {
+const char HIRAGANA[11][5][3] = {
   { "a", "i", "u", "e", "o" },
   { "ka", "ki", "ku", "ke", "ko" },
   { "sa", "si", "su", "se", "so" },
@@ -81,6 +82,7 @@ const char HIRAGANA[10][5][3] = {
   { "ya", "yu", "yo" },
   { "ra", "ri", "ru", "re", "ro" },
   { "wa", "wo", "nn" },
+  { ",", ".", "!", "?" },
 };
 int previousHiraganaRow = -1;
 int previousHiraganaColumn = -1;
@@ -88,8 +90,13 @@ int previousHiraganaColumn = -1;
 void katate_emulator(int pressedRow) {
   int currentHiraganaRow = pressedRow;
 
-  // 「や」行と「わ」行は 3 文字だけ
-  int rowLength = (pressedRow == 7 || pressedRow == 9) ? 3 : 5;
+  int rowLength =
+    // 「や」行と「わ」行は 3 文字だけ
+    (pressedRow == 7 || pressedRow == 9) ? 3 :
+    // 句読点と !?
+    pressedRow == 10 ? 4 :
+    // それ以外は 5 文字
+    5;
   int currentHiraganaColumn = pressedRow == previousHiraganaRow ? (previousHiraganaColumn + 1) % rowLength : 0;
 
   if (previousHiraganaRow != -1 && pressedRow == previousHiraganaRow) {
@@ -150,6 +157,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case KATATE_W:
       if (record->event.pressed) { katate_emulator(9); }
+      break;
+    case KATATE_TEN:
+      if (record->event.pressed) { katate_emulator(10); }
       break;
   }
 
