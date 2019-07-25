@@ -2,11 +2,12 @@
 
 extern keymap_config_t keymap_config;
 
-#define BASE 0
-#define META 1
-#define SYMB 2
-#define GAME 3
-#define RGB  4
+#define BASE   0
+#define META   1
+#define KATATE 2
+#define SYMB   3
+#define GAME   4
+#define RGB    5
 
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
@@ -15,7 +16,17 @@ extern rgblight_config_t rgblight_config;
 
 enum custom_keycodes {
   RGB_RST = SAFE_RANGE,
-  TAP_ANIM
+  TAP_ANIM,
+  KATATE_A,
+  KATATE_K,
+  KATATE_S,
+  KATATE_T,
+  KATATE_N,
+  KATATE_H,
+  KATATE_M,
+  KATATE_Y,
+  KATATE_R,
+  KATATE_W
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -28,10 +39,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [META] = LAYOUT( \
-    KC_ESC,   KC_1,      KC_2,      KC_3,    KC_4,    KC_5,     KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
-    KC_TAB,   KC_A,      KC_S,      KC_D,    KC_F,    KC_G,     KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
-    KC_LSFT,  KC_Z,      KC_X,      KC_C,    KC_V,    KC_B,     TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
-    _______,  _______,   _______,   _______, _______, _______,  _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
+    KC_ESC,   KC_1,      KC_2,      KC_3,    KC_4,    KC_5,     KC_PSCR,    /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
+    KC_TAB,   KC_A,      KC_S,      KC_D,    KC_F,    KC_G,     KC_LBRC,    /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
+    KC_LSFT,  KC_Z,      KC_X,      KC_C,    KC_V,    KC_B,     TO(KATATE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
+    _______,  _______,   _______,   _______, _______, _______,  _______,    /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
+  ),
+
+  [KATATE] = LAYOUT( \
+    KC_ESC,   KC_1,      KATATE_A,  KATATE_K, KATATE_S, KC_5,     KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
+    KC_TAB,   KC_A,      KATATE_T,  KATATE_N, KATATE_H, KC_G,     KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
+    KC_LSFT,  KC_Z,      KATATE_M,  KATATE_Y, KATATE_R, KC_B,     TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
+    _______,  _______,   _______,   KATATE_W, _______,  _______,  _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
   ),
 
   [SYMB] = LAYOUT( \
@@ -52,6 +70,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool isTapAnim = false;
 
+const char HIRAGANA[10][5][3] = {
+  { "a", "i", "u", "e", "o" },
+  { "ka", "ki", "ku", "ke", "ko" },
+  { "sa", "si", "su", "se", "so" },
+  { "ta", "ti", "tu", "te", "to" },
+  { "na", "ni", "nu", "ne", "no" },
+  { "ha", "hi", "hu", "he", "ho" },
+  { "ma", "mi", "mu", "me", "mo" },
+  { "ya", "yu", "yo" },
+  { "ra", "ri", "ru", "re", "ro" },
+  { "wa", "wo", "nn" },
+};
+int previousHiraganaRow = -1;
+int previousHiraganaColumn = -1;
+
+void katate_emulator(int pressedRow) {
+  int currentHiraganaRow = pressedRow;
+
+  // 「や」行と「わ」行は 3 文字だけ
+  int rowLength = (pressedRow == 7 || pressedRow == 9) ? 3 : 5;
+  int currentHiraganaColumn = pressedRow == previousHiraganaRow ? (previousHiraganaColumn + 1) % rowLength : 0;
+
+  if (previousHiraganaRow != -1 && pressedRow == previousHiraganaRow) {
+    SEND_STRING("\b");
+  }
+  send_string(HIRAGANA[currentHiraganaRow][currentHiraganaColumn]);
+
+  previousHiraganaRow = currentHiraganaRow;
+  previousHiraganaColumn = currentHiraganaColumn;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case RGB_MOD:
@@ -71,6 +120,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         isTapAnim = !isTapAnim;
       }
+      break;
+    case KATATE_A:
+      if (record->event.pressed) { katate_emulator(0); }
+      break;
+    case KATATE_K:
+      if (record->event.pressed) { katate_emulator(1); }
+      break;
+    case KATATE_S:
+      if (record->event.pressed) { katate_emulator(2); }
+      break;
+    case KATATE_T:
+      if (record->event.pressed) { katate_emulator(3); }
+      break;
+    case KATATE_N:
+      if (record->event.pressed) { katate_emulator(4); }
+      break;
+    case KATATE_H:
+      if (record->event.pressed) { katate_emulator(5); }
+      break;
+    case KATATE_M:
+      if (record->event.pressed) { katate_emulator(6); }
+      break;
+    case KATATE_Y:
+      if (record->event.pressed) { katate_emulator(7); }
+      break;
+    case KATATE_R:
+      if (record->event.pressed) { katate_emulator(8); }
+      break;
+    case KATATE_W:
+      if (record->event.pressed) { katate_emulator(9); }
       break;
   }
 
