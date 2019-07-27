@@ -154,19 +154,30 @@ int convertKeycode2HiraganaRow(int pressedKeycode) {
   }
 }
 
-void katate_emulator(int pressedRow) {
-  int currentHiraganaRow = pressedRow;
+int convertKeycode2HiraganaColumn(int pressedKeycode) {
+  if (pressedKeycode == KATATE_NIGORI) {
+    return previousHiraganaColumn;
+  }
 
   int rowLength =
     // 「や」行と「わ」行は 3 文字だけ
-    (pressedRow == 7 || pressedRow == 9) ? 3 :
+    (pressedKeycode == KATATE_Y || pressedKeycode == KATATE_W) ? 3 :
     // 句読点と !?
-    pressedRow == 10 ? 4 :
+    pressedKeycode == KATATE_TEN ? 4 :
     // それ以外は 5 文字
     5;
-  int currentHiraganaColumn = pressedRow == previousHiraganaRow ? (previousHiraganaColumn + 1) % rowLength : 0;
 
-  if (previousHiraganaRow != -1 && pressedRow == previousHiraganaRow) {
+  return convertKeycode2HiraganaRow(pressedKeycode) == previousHiraganaRow ? (previousHiraganaColumn + 1) % rowLength : 0;
+}
+
+void katate_emulator(int pressedKeycode) {
+  int currentHiraganaRow = convertKeycode2HiraganaRow(pressedKeycode);
+  int currentHiraganaColumn = convertKeycode2HiraganaColumn(pressedKeycode);
+
+  // guard
+  if (currentHiraganaRow < 0 || currentHiraganaColumn < 0) return;
+
+  if (previousHiraganaRow != -1 && (pressedKeycode == KATATE_NIGORI || currentHiraganaRow == previousHiraganaRow)) {
     SEND_STRING("\b");
   }
   send_string(HIRAGANA[currentHiraganaRow][currentHiraganaColumn]);
