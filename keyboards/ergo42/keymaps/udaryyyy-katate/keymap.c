@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool isTapAnim = false;
 
-const char HIRAGANA[11][5][3] = {
+const char HIRAGANA[16][5][3] = {
   { "a", "i", "u", "e", "o" },
   { "ka", "ki", "ku", "ke", "ko" },
   { "sa", "si", "su", "se", "so" },
@@ -83,6 +83,11 @@ const char HIRAGANA[11][5][3] = {
   { "ra", "ri", "ru", "re", "ro" },
   { "wa", "wo", "nn" },
   { ",", ".", "!", "?" },
+  { "ga", "gi", "gu", "ge", "go" },
+  { "za", "zi", "zu", "ze", "zo" },
+  { "da", "di", "du", "de", "do" },
+  { "ba", "bi", "bu", "be", "bo" },
+  { "pa", "pi", "pu", "pe", "po" },
 };
 int previousHiraganaRow = -1;
 int previousHiraganaColumn = -1;
