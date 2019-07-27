@@ -48,10 +48,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [KATATE] = LAYOUT( \
-    KC_ESC,   KC_1,      KATATE_A,      KATATE_K, KATATE_S,   KC_5,     KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
-    KC_TAB,   KC_A,      KATATE_T,      KATATE_N, KATATE_H,   KC_G,     KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
-    KC_LSFT,  KC_Z,      KATATE_M,      KATATE_Y, KATATE_R,   KC_B,     TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
-    _______,  _______,   KATATE_NIGORI, KATATE_W, KATATE_TEN, _______,  _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
+    KC_LEFT,   KC_RIGHT,  KATATE_A,      KATATE_K, KATATE_S,   KC_RIGHT, KC_PSCR,  /*|*/ KC_6,      KC_7,    KC_8,    KC_9,     KC_0,     KC_PMNS, KC_PPLS, \
+    XXXXXXX,   KC_DEL,    KATATE_T,      KATATE_N, KATATE_H,   KC_BSPC,  KC_LBRC,  /*|*/ KC_RBRC,   KC_4,    KC_5,    KC_6,     XXXXXXX,  KC_PSLS, KC_PAST, \
+    KC_SPACE,  KC_BSPC,   KATATE_M,      KATATE_Y, KATATE_R,   KC_ENT,   TO(BASE), /*|*/ KC_DOT,    KC_1,    KC_2,    KC_3,     XXXXXXX,  KC_UP,   KC_BSLS, \
+    KC_ENT,    KC_RIGHT,  KATATE_NIGORI, KATATE_W, KATATE_TEN, KC_ENT,   _______,  /*|*/ _______,   KC_0,    KC_0,    KC_ENT,   KC_LEFT,  KC_DOWN, KC_RIGHT \
   ),
 
   [SYMB] = LAYOUT( \
