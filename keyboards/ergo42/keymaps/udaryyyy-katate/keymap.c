@@ -27,7 +27,8 @@ enum custom_keycodes {
   KATATE_Y,
   KATATE_R,
   KATATE_W,
-  KATATE_TEN
+  KATATE_TEN,
+  KATATE_NIGORI
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -91,6 +92,67 @@ const char HIRAGANA[16][5][3] = {
 };
 int previousHiraganaRow = -1;
 int previousHiraganaColumn = -1;
+
+int convertKeycode2HiraganaRow(int pressedKeycode) {
+  if(pressedKeycode == KATATE_NIGORI) {
+    switch(previousHiraganaRow) {
+      // ka -> ga
+      case 1:
+        return 11;
+      // ga -> ka
+      case 11:
+        return 1;
+      // sa -> za
+      case 2:
+        return 12;
+      // za -> sa
+      case 12:
+        return 2;
+      // ta -> da
+      case 3:
+        return 13;
+      // da -> ta
+      case 13:
+        return 3;
+      // ha -> ba
+      case 5:
+        return 14;
+      // ba -> pa
+      case 14:
+        return 15;
+      // pa -> ha
+      case 15:
+        return 5;
+      default:
+        return previousHiraganaRow;
+    }
+  }
+
+  switch(pressedKeycode) {
+    case KATATE_A:
+      return 0;
+    case KATATE_K:
+      return 1;
+    case KATATE_S:
+      return 2;
+    case KATATE_T:
+      return 3;
+    case KATATE_N:
+      return 4;
+    case KATATE_H:
+      return 5;
+    case KATATE_M:
+      return 6;
+    case KATATE_Y:
+      return 7;
+    case KATATE_R:
+      return 8;
+    case KATATE_W:
+      return 9;
+    case KATATE_TEN:
+      return 10;
+  }
+}
 
 void katate_emulator(int pressedRow) {
   int currentHiraganaRow = pressedRow;
