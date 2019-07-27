@@ -206,6 +206,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TAP_ANIM:
       if (record->event.pressed) {
         isTapAnim = !isTapAnim;
+        previousHiraganaRow = -1;
       }
       break;
     case KATATE_A:
