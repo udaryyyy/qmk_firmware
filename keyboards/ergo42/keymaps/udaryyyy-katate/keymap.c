@@ -100,6 +100,12 @@ int previousHiraganaColumn = -1;
 int convertKeycode2HiraganaRow(int pressedKeycode) {
   if(pressedKeycode == KATATE_NIGORI) {
     switch(previousHiraganaRow) {
+      // a -> la
+      case 0:
+        return 16;
+      // la -> a
+      case 16:
+        return 0;
       // ka -> ga
       case 1:
         return 11;
@@ -115,8 +121,11 @@ int convertKeycode2HiraganaRow(int pressedKeycode) {
       // ta -> da
       case 3:
         return 13;
-      // da -> ta
+      // da -> ta or du -> ltu
       case 13:
+        return previousHiraganaColumn == 2 ? 17 : 3;
+      // ltu -> tu
+      case 17:
         return 3;
       // ha -> ba
       case 5:
@@ -127,6 +136,18 @@ int convertKeycode2HiraganaRow(int pressedKeycode) {
       // pa -> ha
       case 15:
         return 5;
+      // ya -> lya
+      case 7:
+        return 18;
+      // lya -> ya
+      case 18:
+        return 7;
+      // wa -> lwa
+      case 9:
+        if (previousHiraganaColumn == 0) { return 19; }
+      // lwa -> wa
+      case 19:
+        return 9;
       default:
         return previousHiraganaRow;
     }
@@ -161,6 +182,7 @@ int convertKeycode2HiraganaRow(int pressedKeycode) {
 }
 
 int convertKeycode2HiraganaColumn(int pressedKeycode) {
+  // NIGORI の場合は column が同じままトグルされる
   if (pressedKeycode == KATATE_NIGORI) {
     return previousHiraganaColumn;
   }
