@@ -209,37 +209,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
     case KATATE_A:
-      if (record->event.pressed) { katate_emulator(0); }
-      break;
     case KATATE_K:
-      if (record->event.pressed) { katate_emulator(1); }
-      break;
     case KATATE_S:
-      if (record->event.pressed) { katate_emulator(2); }
-      break;
     case KATATE_T:
-      if (record->event.pressed) { katate_emulator(3); }
-      break;
     case KATATE_N:
-      if (record->event.pressed) { katate_emulator(4); }
-      break;
     case KATATE_H:
-      if (record->event.pressed) { katate_emulator(5); }
-      break;
     case KATATE_M:
-      if (record->event.pressed) { katate_emulator(6); }
-      break;
     case KATATE_Y:
-      if (record->event.pressed) { katate_emulator(7); }
-      break;
     case KATATE_R:
-      if (record->event.pressed) { katate_emulator(8); }
-      break;
     case KATATE_W:
-      if (record->event.pressed) { katate_emulator(9); }
-      break;
     case KATATE_TEN:
-      if (record->event.pressed) { katate_emulator(10); }
+    case KATATE_NIGORI:
+      if (record->event.pressed) { katate_emulator(keycode); }
       break;
     default:
       previousHiraganaRow = -1;
