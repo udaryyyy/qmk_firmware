@@ -83,7 +83,7 @@ const char HIRAGANA[20][5][4] = {
   { "ya", "yu", "yo" },
   { "ra", "ri", "ru", "re", "ro" },
   { "wa", "wo", "nn" },
-  { ",", ".", "!", "?" },
+  { ",", ".", "-", "!", "?" },
   { "ga", "gi", "gu", "ge", "go" },
   { "za", "zi", "zu", "ze", "zo" },
   { "da", "di", "du", "de", "do" },
@@ -190,8 +190,6 @@ int convertKeycode2HiraganaColumn(int pressedKeycode) {
   int rowLength =
     // 「や」行と「わ」行は 3 文字だけ
     (pressedKeycode == KATATE_Y || pressedKeycode == KATATE_W) ? 3 :
-    // 句読点と !?
-    pressedKeycode == KATATE_TEN ? 4 :
     // それ以外は 5 文字
     5;
 
