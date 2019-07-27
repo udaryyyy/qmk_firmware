@@ -151,6 +151,8 @@ int convertKeycode2HiraganaRow(int pressedKeycode) {
       return 9;
     case KATATE_TEN:
       return 10;
+    default:
+      return 0;
   }
 }
 
