@@ -58,11 +58,11 @@
   }
 
 #define LAYOUT_60_with_macro( \
-  LA9, LA8, LA1, LA2, LA3, LA4, LA5, LA6, LA7, RA1, RA2, RA3, RA4, RA5, RA6, RA7, RA8, \
-  LB9, LB8, LB1, LB2, LB3, LB4, LB5, LB6,      RB1, RB2, RB3, RB4, RB5, RB6, RB7, RB8, \
-  LC9, LC8, LC1, LC2, LC3, LC4, LC5, LC6,      RC1, RC2, RC3, RC4, RC5, RC6,      RC8, \
-  LD9, LD8, LD1,      LD3, LD4, LD5, LD6, LD7, RD1, RD2, RD3, RD4,      RD6, RD7, RD8, \
-  LE9, LE8, LE1, LE2, LE3,      LE5,      LE7, RE1, RE2,      RE4, RE5, RE6, RE7, RE8 \
+  LA9, LA8,    LA1, LA2, LA3, LA4, LA5, LA6, LA7,     RA1, RA2, RA3, RA4, RA5, RA6, RA7, RA8, \
+  LB9, LB8,    LB1, LB2, LB3, LB4, LB5, LB6,          RB1, RB2, RB3, RB4, RB5, RB6, RB7, RB8, \
+  LC9, LC8,    LC1, LC2, LC3, LC4, LC5, LC6,          RC1, RC2, RC3, RC4, RC5, RC6,      RC8, \
+  LD9, LD8,    LD1,      LD3, LD4, LD5, LD6, LD7,     RD1, RD2, RD3, RD4,      RD6, RD7, RD8, \
+  LE9, LE8,    LE1, LE2, LE3,      LE5,      LE7,     RE1, RE2,      RE4, RE5, RE6, RE7, RE8 \
   ) \
   { \
     { LA1, LA2, LA3, LA4, LA5, LA6, LA7, LA8 }, \
@@ -81,11 +81,11 @@
 
 
 #define LAYOUT_65_with_macro( \
-  LA9, LA8, LA1, LA2, LA3, LA4, LA5, LA6, LA7, RA1, RA2, RA3, RA4, RA5, RA6, RA7, RA8, RA9, \
-  LB9, LB8, LB1, LB2, LB3, LB4, LB5, LB6,      RB1, RB2, RB3, RB4, RB5, RB6, RB7, RB8, RB9, \
-  LC9, LC8, LC1, LC2, LC3, LC4, LC5, LC6,      RC1, RC2, RC3, RC4, RC5, RC6,      RC8, RC9, \
-  LD9, LD8, LD1,      LD3, LD4, LD5, LD6, LD7, RD1, RD2, RD3, RD4,      RD6, RD7, RD8, RD9, \
-  LE9, LE8, LE1, LE2, LE3,      LE5,      LE7, RE1, RE2,      RE4, RE5, RE6, RE7, RE8, RE9 \
+  LA9, LA8,     LA1, LA2, LA3, LA4, LA5, LA6, LA7,     RA1, RA2, RA3, RA4, RA5, RA6, RA7, RA8, RA9, \
+  LB9, LB8,     LB1, LB2, LB3, LB4, LB5, LB6,          RB1, RB2, RB3, RB4, RB5, RB6, RB7, RB8, RB9, \
+  LC9, LC8,     LC1, LC2, LC3, LC4, LC5, LC6,          RC1, RC2, RC3, RC4, RC5, RC6,      RC8, RC9, \
+  LD9, LD8,     LD1,      LD3, LD4, LD5, LD6, LD7,     RD1, RD2, RD3, RD4,      RD6, RD7, RD8, RD9, \
+  LE9, LE8,     LE1, LE2, LE3,      LE5,      LE7,     RE1, RE2,      RE4, RE5, RE6, RE7, RE8, RE9 \
   ) \
   { \
     { LA1, LA2, LA3, LA4, LA5, LA6, LA7, LA8 }, \
